@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>HoverIntent</title>
+	<meta charset="UTF-8">
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+			border: none;
+		}
+
+		body {
+			background: #f2f2f2;
+			font-size: 18px;
+			font-family: 'Open Sans', sans-serif;
+			color: #262626;
+		}
+
+		.container {
+			width: 670px;
+			height: 320px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin: -160px 0 0 -335px;
+		}
+
+		.block {
+			width: 298px;
+			height: 286px;
+			text-align: center;
+			padding: 16px 10px 16px 10px;
+			overflow: hidden;
+			background: white;
+			border-radius: 4px;
+			border: 1px solid #e5e5e5;
+			cursor: pointer;
+		}
+
+		.positive {
+			float: left;
+		}
+
+		.negative {
+			float: right;
+		}
+
+		.yes {
+			background: #2ecc71;
+			border-color: #27ae60;
+		}
+
+		.no {
+			background: #e74c3c;
+			border-color: #c0392b;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div class="block positive"></div>
+	<div class="block negative"></div>
+</div>
+
+<script type="text/javascript" defer>
+	document.addEventListener( "DOMContentLoaded", onStart );
+	var GreenBlock, RedBlock;
+
+	function onStart (e) {
+		var positive = document.getElementsByClassName('positive')[0];
+		var negative = document.getElementsByClassName('negative')[0];
+		GreenBlock = new HoverIntent (positive, goodJob, removeGood);
+		RedBlock = new HoverIntent (negative, badJob, removeBad);
+
+		function goodJob (e) {
+			positive.classList.add('yes');
+		};
+
+		function removeGood(e) {
+			positive.classList.remove('yes');
+		};
+
+		function badJob (e) {
+			negative.classList.add('no');
+		};
+
+		function removeBad(e) {
+			negative.classList.remove('no');
+		};
+	};
+
+	function HoverIntent (obj, positive, negative, speed) {
+		if (arguments.length<2) return;
+
+		this.obj = obj;
+		this.positive = positive;	
+
+		if (arguments.length >= 4) {
+			this.negative = arguments[2];
+			this.speed = arguments[3];
+		} else if (arguments.length == 3) {
+			if ( typeof(arguments[2]) == 'number' ) {
+				this.speed = arguments[2];
+			} else {
+				this.speed = 500;
+				this.negative = arguments[2];
+			};
+		} else if (arguments.length <= 2) {
+			this.speed = 500;
+		};
+
+		var interval, x, X, y, Y, time, context = this, mouseEvent;
+
+		context.obj.addEventListener('mouseover', mouseCome);
+		context.obj.addEventListener('mouseout', mouseLeft);
+
+		function mouseCome (e) {
+			if (interval) return;
+
+			x = X = e.clientX;
+			y = Y = e.clientY;
+			mouseEvent = e;
+			time = +Date.now();
+
+			context.obj.addEventListener('mousemove', writeSpeed);
+			interval = setInterval (speedCount, 100);
+		};
+
+		function speedCount () {
+			var currentTime = +Date.now();
+			var speedNew = Math.sqrt( Math.pow((X-x),2) + Math.pow((Y-y),2) )/(currentTime-time)*1000;
+
+			time = currentTime;
+			X = x;
+			Y = y;
+
+			if (speedNew<=context.speed) {
+				clearInterval(interval);
+				interval = undefined;
+				context.obj.removeEventListener('mousemove', writeSpeed);
+				context.positive(mouseEvent);
+			}
+		};
+
+		function mouseLeft (e) {
+			clearInterval(interval);
+			interval = undefined;
+			context.obj.removeEventListener('mousemove', writeSpeed);
+			context.negative(e);
+		};
+
+		function writeSpeed (e) {
+			x = e.clientX;
+			y = e.clientY;
+			mouseEvent = e;
+		};
+
+		this.changeTarget = function (target) {
+			if (!target) return;
+			this.obj.removeEventListener('mouseover', mouseCome);
+			this.obj.removeEventListener('mouseout', mouseLeft);
+
+			target.addEventListener('mouseover', mouseCome);
+			target.addEventListener('mouseout', mouseLeft);
+
+			this.obj = target;
+			return this.obj;
+		};
+
+		this.deactivateListeners = function () {
+			this.obj.removeEventListener('mouseover', mouseCome);
+			this.obj.removeEventListener('mouseout', mouseLeft);
+			return "Listeners Diactivated";
+		};
+
+		this.activateListeners = function () {
+			this.obj.addEventListener('mouseover', mouseCome);
+			this.obj.addEventListener('mouseout', mouseLeft);
+			return "Listeners Activated";
+		};
+	};
+</script>
+</body>
+</html>
