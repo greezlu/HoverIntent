@@ -8,13 +8,13 @@ HoverIntent (obj, positive [, negative, speed])
 ```
 ## Parametrs
 ### obj
-   DOM Node Object
+    DOM Node Object
 ### positive
-   Function
+    Function
 ### negative
-   Function
+    Function
 ### speed
-   Number  
+    Number  
 ## Use
 ```javascript
 new HoverIntent (div, showTool, hideTool, 500);
