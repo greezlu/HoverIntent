@@ -6,6 +6,7 @@ Activates **[positive]** callback when mouse is on **[obj]** and it's speed is l
 Activates **[negative]** callback every time mouse left **[obj]**  
 - Callback functions always gets **EventObject** as first argument  
 - Speed is in *pixel/second*
+- Default speed is 500
 ## Parameters
 ### obj
     DOM Node Object
