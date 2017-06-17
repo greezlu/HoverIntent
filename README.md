@@ -1,5 +1,5 @@
 # HoverIntent
-Activates **[positive]** callback when mouse speed is less then **[speed]** parametr.  
+Activates **[positive]** callback when mouse speed is less then **[speed]** parametr  
 Activates **[negative]** callback when mouse left **[obj]**
 ```javascript
 HoverIntent (obj, positive [, negative, speed])
@@ -17,8 +17,8 @@ HoverIntent (obj, positive [, negative, speed])
 ```javascript
 new HoverIntent (div, showTool, hideTool, 500);
 
-var Container = new HoverIntent (mainContainer, showTool, hideTool, 500);
-```
+var Container = new HoverIntent (div, showTool, hideTool, 500);
+```   
 ## Methods
 ### .deactivateListeners()
 Removing current listeners from .obj
@@ -27,7 +27,7 @@ Removing current listeners from .obj
 Add current listeners to .obj if they were removed
 
 ### .changeTarget(newTarget)
-Remove listeners from current target and add listeners to the new one
+Remove listeners from current target and add listeners to the new one   
 
 ## Local Variables
 ### .speed
