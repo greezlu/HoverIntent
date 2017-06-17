@@ -1,6 +1,6 @@
 # HoverIntent
 Activates **[positive]** callback when mouse is on **[obj]** and it's speed is less then **[speed]** parameter   
-Activates **[negative]** callback when mouse left **[obj]**
+Activates **[negative]** callback every time mouse left **[obj]**
 ```javascript
 HoverIntent (obj, positive [, negative, speed])
 ```
