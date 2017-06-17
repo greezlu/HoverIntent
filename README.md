@@ -28,10 +28,10 @@ var Container = new HoverIntent (div, showTool, hideTool, 500);
 ```   
 ## Methods
 ### .deactivateListeners()
-Removing current listeners from .obj
+Removing current listeners from target
 
 ### .activateListeners()
-Add current listeners to .obj if they were removed
+Add current listeners on target (if they were removed)
 
 ### .changeTarget(newTarget)
 Remove listeners from current target and add to the new one   
