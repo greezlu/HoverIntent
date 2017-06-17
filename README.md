@@ -18,6 +18,10 @@ HoverIntent (obj, positive [, negative, speed])
 new HoverIntent (div, showTool, hideTool, 500);
 
 var Container = new HoverIntent (div, showTool, hideTool, 500);
+
+new HoverIntent (div, showTool);
+
+new HoverIntent (div, showTool, 500);
 ```   
 ## Methods
 ### .deactivateListeners()
