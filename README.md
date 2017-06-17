@@ -13,7 +13,7 @@ HoverIntent (obj, positive [, negative, speed])
 ### negative
    Function
 ### speed
-   Number (px\sec)
+   Number  
 ## Use
 ```javascript
 new HoverIntent (div, showTool, hideTool, 500);
