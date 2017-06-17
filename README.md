@@ -29,7 +29,7 @@ var Container = new HoverIntent (div, showTool, hideTool, 500);
 ### .deactivateListeners()
 Removing current listeners from .obj
 
-### .activateLListeners()
+### .activateListeners()
 Add current listeners to .obj if they were removed
 
 ### .changeTarget(newTarget)
