@@ -34,7 +34,7 @@ Removing current listeners from .obj
 Add current listeners to .obj if they were removed
 
 ### .changeTarget(newTarget)
-Remove listeners from current target and add listeners to the new one   
+Remove listeners from current target and add to the new one   
 
 ## Local Variables
 ### .speed
