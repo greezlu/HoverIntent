@@ -25,15 +25,12 @@ new HoverIntent (div, showTool, 500);
 new HoverIntent (div, showTool);
 
 var Container = new HoverIntent (div, showTool, hideTool, 500);
-
 ```   
 ## Methods
-### .deactivateListeners()
+### .deactivate()
 Removing current listeners from target
-
-### .activateListeners()
+### .activate()
 Add current listeners on target (if they were removed)
-
 ### .changeTarget(newTarget)
 Remove listeners from current target and add to the new one   
 #### newTarget
@@ -41,9 +38,7 @@ Remove listeners from current target and add to the new one
 ## Local Variables
 ### .sensitivity
 Tracking speed in *pixel/second*
-
 ### .positive
 Callback function
-
 ### .negative
 Callback function
