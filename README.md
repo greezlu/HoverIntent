@@ -42,3 +42,5 @@ Tracking speed in *pixel/second*
 Callback function
 ### .negative
 Callback function
+### .target
+Contains the current **HTML Object** which is tracked. Not writable
