@@ -160,4 +160,10 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 			return negative;
 		}
 	});
+	
+	Object.defineProperty(this, "target", {
+		get: function () {
+			return elem;
+		}
+	});
 };
