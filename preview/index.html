@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>HoverIntent</title>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="HoverIntent.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class="container">
+		<div class="block positive"></div>
+		<div class="block negative"></div>
+	</div>
+
+	<script type="text/javascript" defer>
+		document.addEventListener( "DOMContentLoaded", onStart );
+		var GreenBlock, RedBlock;
+
+		function onStart (e) {
+			var positive = document.getElementsByClassName('positive')[0];
+			var negative = document.getElementsByClassName('negative')[0];
+			GreenBlock = new HoverIntent (positive, goodJob, removeGoodJob, 500);
+			RedBlock = new HoverIntent (negative, badJob, removeBadJob, 500);
+
+			function goodJob (e) {
+				positive.classList.add('yes');
+			};
+
+			function removeGoodJob(e) {
+				positive.classList.remove('yes');
+			};
+
+			function badJob (e) {
+				negative.classList.add('no');
+			};
+
+			function removeBadJob(e) {
+				negative.classList.remove('no');
+			};
+		};
+	</script>
+</body>
+</html>
