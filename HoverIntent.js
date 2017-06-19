@@ -1,5 +1,7 @@
 function HoverIntent (obj, funcPos, funcNeg, sens) {
-	if (arguments.length<2) throw new Error("Missing arguments");
+	var len = arguments.length;
+	
+	if (len<2) throw new Error("Missing arguments");
 
 	var elem, positive, negative, speed;
 
@@ -7,8 +9,6 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 	if (!elem) throw new Error("First argument must be an HTML Object");
 	positive = isTypeOf (arguments[1], "function");
 	if (!elem) throw new Error("Second argument must be a Function");
-
-	var len = arguments.length;
 
 	if (len === 3) {
 		negative = isTypeOf (arguments[2], "function");
