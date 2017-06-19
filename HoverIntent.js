@@ -43,7 +43,7 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 			pTime = +Date.now();
 			elem.addEventListener('mousemove', onMouseMove);
 			checkSpeedInterval = setInterval (speedCount, 100);
-		};		
+		};
 	};
 
 	function speedCount () {
