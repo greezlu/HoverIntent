@@ -1,90 +1,144 @@
-function HoverIntent (obj, positive, negative, speed) {
-	if (arguments.length<2) return;
+function HoverIntent (obj, funcPos, funcNeg, sens) {
+	if (arguments.length<2) throw new Error("Missing arguments. Must be at least 2.");
 
-	this.obj = obj;
-	this.positive = positive;	
+	var elem = arguments[0],
+			positive = arguments[1],
+			negative,
+			speed;
 
 	if (arguments.length >= 4) {
-		this.negative = arguments[2];
-		this.speed = arguments[3];
+		negative = arguments[2];
+		speed = arguments[3];
 	} else if (arguments.length == 3) {
-		if ( typeof(arguments[2]) == 'number' ) {
-			this.speed = arguments[2];
+		if ( typeof(arguments[2]) == 'number') {
+			speed = arguments[2];
 		} else {
-			this.speed = 500;
-			this.negative = arguments[2];
+			speed= 500;
+			negative = arguments[2];
 		};
-	} else if (arguments.length <= 2) {
-		this.speed = 500;
+	} else if (arguments.length == 2) {
+		speed = 500;
 	};
 
-	var interval, x, X, y, Y, time, context = this, mouseEvent;
+	var checkSpeedInterval,
+			cX, pX, xY, pY,
+			pTime,
+			context = this,
+			mouseEvent,
+			isHover = false;
 
-	context.obj.addEventListener('mouseover', mouseCome);
-	context.obj.addEventListener('mouseout', mouseLeft);
+	elem.addEventListener('mouseover', onMouseOver);
+	elem.addEventListener('mouseout', onMouseOut);
 
-	function mouseCome (e) {
-		if (interval) return;
-
-		x = X = e.clientX;
-		y = Y = e.clientY;
-		mouseEvent = e;
-		time = +Date.now();
-
-		context.obj.addEventListener('mousemove', writeSpeed);
-		interval = setInterval (speedCount, 100);
+	function onMouseOver (e) {
+		onMouseMove(e);
+		if (!checkSpeedInterval) {
+			pX = cX;
+			pY = cY;
+			pTime = +Date.now();
+			elem.addEventListener('mousemove', onMouseMove);
+			checkSpeedInterval = setInterval (speedCount, 100);
+		};		
 	};
 
 	function speedCount () {
-		var currentTime = +Date.now();
-		var speedNew = Math.sqrt( Math.pow((X-x),2) + Math.pow((Y-y),2) )/(currentTime-time)*1000;
+		var cTime = +Date.now();
+		var cSpeed = Math.sqrt( Math.pow((cX-pX),2) + Math.pow((cY-pY),2) )/(cTime-pTime)*1000;
 
-		time = currentTime;
-		X = x;
-		Y = y;
-
-		if (speedNew<=context.speed) {
-			clearInterval(interval);
-			interval = undefined;
-			context.obj.removeEventListener('mousemove', writeSpeed);
-			context.positive(mouseEvent);
-		}
+		if (cSpeed>context.sensitivity) {
+			pTime = cTime;
+			pX = cX;
+			pY = cY;
+		} else {
+			isHover = true;
+			stopSpeedCheck();
+			positive(mouseEvent);
+		};
 	};
 
-	function mouseLeft (e) {
-		clearInterval(interval);
-		interval = undefined;
-		context.obj.removeEventListener('mousemove', writeSpeed);
-		context.negative(e);
+	function onMouseOut (e) {
+		if ( !e.relatedTarget || !elem.contains(e.relatedTarget) ) {
+			stopSpeedCheck();
+			if (isHover) {
+				isHover = false;
+				if (negative) negative(e);
+			};
+		};		
 	};
 
-	function writeSpeed (e) {
-		x = e.clientX;
-		y = e.clientY;
+	function onMouseMove (e) {
+		cX = e.clientX;
+		cY = e.clientY;
 		mouseEvent = e;
 	};
 
+	function stopSpeedCheck () {
+		clearInterval(checkSpeedInterval);
+		checkSpeedInterval = undefined;
+		mouseEvent = undefined;
+		elem.removeEventListener('mousemove', onMouseMove);
+	};
+
 	this.changeTarget = function (target) {
-		if (!target) return;
-		this.obj.removeEventListener('mouseover', mouseCome);
-		this.obj.removeEventListener('mouseout', mouseLeft);
+		if (arguments.length<1) throw new Error("Missing argument");
 
-		target.addEventListener('mouseover', mouseCome);
-		target.addEventListener('mouseout', mouseLeft);
+		var targetClass = target.toString().slice(8, -1);
+		if (targetClass != "HTMLDivElement") throw new Error("Argument must be an HTML DOM Object");
 
-		this.obj = target;
-		return this.obj;
+		context.deactivateListeners();
+		elem = target;
+		context.activateListeners();
+
+		return elem;
 	};
 
 	this.deactivateListeners = function () {
-		this.obj.removeEventListener('mouseover', mouseCome);
-		this.obj.removeEventListener('mouseout', mouseLeft);
-		return "Listeners Diactivated";
+		elem.removeEventListener('mouseover', onMouseOver);
+		elem.removeEventListener('mouseout', onMouseOut);
+		return elem;
 	};
 
 	this.activateListeners = function () {
-		this.obj.addEventListener('mouseover', mouseCome);
-		this.obj.addEventListener('mouseout', mouseLeft);
-		return "Listeners Activated";
+		elem.addEventListener('mouseover', onMouseOver);
+		elem.addEventListener('mouseout', onMouseOut);
+		return elem;
 	};
+
+	Object.defineProperty(this, "sensitivity", {
+		set: function (value) {
+			var n = parseInt(value);
+			if ( typeof  n != 'number' || !isFinite(n) ) {
+				 throw new Error("Value must be a finite Number");
+			};
+			speed = n;
+			return speed;
+		},
+		get: function(){
+			return speed;
+		}
+	});
+
+	Object.defineProperty(this, "positive", {
+		set: function (value) {
+			if (typeof value != 'function' ) {
+				 throw new Error("Argument must be a Function");
+			};
+			positive = value;
+		},
+		get: function () {
+			return positive;
+		}
+	});
+
+	Object.defineProperty(this, "negative", {
+		set: function (value) {
+			if (typeof value != 'function' ) {
+				 throw new Error("Argument must be a Function");
+			};
+			negative = value;
+		},
+		get: function () {
+			return negative;
+		}
+	});
 };
