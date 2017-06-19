@@ -10,7 +10,6 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 
 	var len = arguments.length;
 
-
 	if (len === 3) {
 		negative = isTypeOf (arguments[2], "function");
 		if (!negative) {
