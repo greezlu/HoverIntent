@@ -1,22 +1,28 @@
 function HoverIntent (obj, funcPos, funcNeg, sens) {
-	if (arguments.length<2) throw new Error("Missing arguments. Must be at least 2.");
+	if (arguments.length<2) throw new Error("Missing arguments");
 
-	var elem = arguments[0],
-			positive = arguments[1],
-			negative,
-			speed;
+	var elem, positive,	negative,	speed;
 
-	if (arguments.length >= 4) {
-		negative = arguments[2];
-		speed = arguments[3];
-	} else if (arguments.length == 3) {
-		if ( typeof(arguments[2]) == 'number') {
-			speed = arguments[2];
-		} else {
-			speed= 500;
-			negative = arguments[2];
+	elem = isTypeOf (arguments[0], "HTML");
+	if (!elem) throw new Error("First argument must be an HTML Object");
+	positive = isTypeOf (arguments[1], "function");
+	if (!elem) throw new Error("Second argument must be a Function");
+
+	var len = arguments.length;
+
+
+	if (len === 3) {
+		negative = isTypeOf (arguments[2], "function");
+		if (!negative) {
+			speed = isTypeOf (arguments[2], "number");
+			if (!speed) throw new Error("Third argument must be a Function or Number");
 		};
-	} else if (arguments.length == 2) {
+	} else if (len > 3) {
+		negative = isTypeOf (arguments[2], "function");
+		if (!negative) throw new Error("Third argument must be a Function");
+		speed = isTypeOf (arguments[3], "number");
+		if (!speed) throw new Error("Fourth argument must be a Number");
+	} else {
 		speed = 500;
 	};
 
@@ -82,8 +88,8 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 	this.changeTarget = function (target) {
 		if (arguments.length<1) throw new Error("Missing argument");
 
-		var targetClass = target.toString().slice(8, -1);
-		if (targetClass != "HTMLDivElement") throw new Error("Argument must be an HTML DOM Object");
+		var targetClass = target.toString().slice(8, 12);
+		if (targetClass != "HTML") throw new Error("Argument must be an HTML Object");
 
 		context.deactivateListeners();
 		elem = target;
@@ -104,13 +110,29 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 		return elem;
 	};
 
+	function isTypeOf (element, type) {
+		var feedback = null;
+		switch (type) {
+		case ('number'):
+			var n = parseInt(element);
+			if ( typeof  n == 'number' && isFinite(n) ) feedback = n;
+			break;
+		case ('function'):
+			if ( typeof element == 'function' ) feedback = element;
+			break;
+		case ('HTML'):
+			var targetClass = element.toString().slice(8, 12);
+			if (targetClass == "HTML") feedback = element;
+			break;
+		};
+		return feedback;
+	};
+
 	Object.defineProperty(this, "sensitivity", {
 		set: function (value) {
-			var n = parseInt(value);
-			if ( typeof  n != 'number' || !isFinite(n) ) {
-				 throw new Error("Value must be a finite Number");
-			};
-			speed = n;
+			var sensNumber = isTypeOf(value, 'number');
+			if (!sensNumber) throw new Error("Value must be a finite Number");
+			speed = sensNumber;
 			return speed;
 		},
 		get: function(){
@@ -120,9 +142,8 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 
 	Object.defineProperty(this, "positive", {
 		set: function (value) {
-			if (typeof value != 'function' ) {
-				 throw new Error("Argument must be a Function");
-			};
+			var positiveCallback = isTypeOf(value, 'function');
+			if (!positiveCallback) throw new Error("Argument must be a Function");
 			positive = value;
 		},
 		get: function () {
@@ -132,9 +153,8 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 
 	Object.defineProperty(this, "negative", {
 		set: function (value) {
-			if (typeof value != 'function' ) {
-				 throw new Error("Argument must be a Function");
-			};
+			var negativeCallback = isTypeOf(value, 'function');
+			if (!negativeCallback) throw new Error("Argument must be a Function");
 			negative = value;
 		},
 		get: function () {
