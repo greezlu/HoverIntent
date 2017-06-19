@@ -26,11 +26,11 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 	};
 
 	var checkSpeedInterval,
-			cX, pX, xY, pY,
-			pTime,
-			context = this,
-			mouseEvent,
-			isHover = false;
+	cX, pX, xY, pY,
+	pTime,
+	context = this,
+	mouseEvent,
+	isHover = false;
 
 	elem.addEventListener('mouseover', onMouseOver);
 	elem.addEventListener('mouseout', onMouseOut);
