@@ -1,7 +1,7 @@
 function HoverIntent (obj, funcPos, funcNeg, sens) {
 	if (arguments.length<2) throw new Error("Missing arguments");
 
-	var elem, positive,	negative,	speed;
+	var elem, positive, negative, speed;
 
 	elem = isTypeOf (arguments[0], "HTML");
 	if (!elem) throw new Error("First argument must be an HTML Object");
