@@ -121,7 +121,7 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 			break;
 		case ('HTML'):
 			var targetClass = element.toString().slice(8, 12);
-			if (targetClass == "HTML") feedback = element;
+			if ( targetClass == "HTML" ) feedback = element;
 			break;
 		};
 		return feedback;
