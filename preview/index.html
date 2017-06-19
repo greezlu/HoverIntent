@@ -20,8 +20,8 @@
 		function onStart (e) {
 			var positive = document.getElementsByClassName('positive')[0];
 			var negative = document.getElementsByClassName('negative')[0];
-			GreenBlock = new HoverIntent (positive, goodJob, removeGoodJob, 500);
-			new HoverIntent (negative, badJob, removeBadJob, 500);
+			GreenBlock = new HoverIntent (positive, goodJob, removeGoodJob);
+			new HoverIntent (negative, badJob, removeBadJob);
 
 			function goodJob (e) {
 				positive.classList.add('yes');
