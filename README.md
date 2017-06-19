@@ -1,20 +1,20 @@
 # HoverIntent
 ```javascript
-HoverIntent (obj, positive [, negative, speed])
+HoverIntent (obj, positive [, negative, sensitivity])
 ```
-Activates **[positive]** callback when mouse is on **[obj]** and it's speed is less then **[speed]** parameter   
-Activates **[negative]** callback every time mouse left **[obj]**  
-- Callback functions always gets **EventObject** as first argument  
-- Speed is in *pixel/second*
-- Default speed is 500
+Activates **[positive]** callback with sensitivity mouse parametr   
+Activates **[negative]** callback if **[positive]** was activated and mouse left the **[obj]**  
+- Callback functions always gets **EventObject** as first argument
+- Sensitivity is in *pixel/second*
+- Default sensitivity is 500
 ## Parameters
 ### obj
-    DOM Node Object
+    HTMLDivElement
 ### positive
     Function
 ### negative
     Function
-### speed
+### sensitivity
     Number  
 ## Use
 ```javascript
@@ -36,9 +36,10 @@ Add current listeners on target (if they were removed)
 
 ### .changeTarget(newTarget)
 Remove listeners from current target and add to the new one   
-
+### newTarget
+    HTMLDivElement
 ## Local Variables
-### .speed
+### .sensitivity
 Tracing speed in px\sec
 
 ### .positive
