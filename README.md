@@ -9,7 +9,7 @@ Activates **[negative]** callback if **[positive]** was activated and mouse left
 - Default sensitivity is 500
 ## Parameters
 ### obj
-    HTMLDivElement
+    HTML Object
 ### positive
     Function
 ### negative
@@ -37,7 +37,7 @@ Add current listeners on target (if they were removed)
 ### .changeTarget(newTarget)
 Remove listeners from current target and add to the new one   
 ### newTarget
-    HTMLDivElement
+    HTML Object
 ## Local Variables
 ### .sensitivity
 Tracing speed in px\sec
