@@ -2,7 +2,7 @@
 ```javascript
 HoverIntent (obj, positive [, negative, sensitivity])
 ```
-Activates **[positive]** callback with sensitivity mouse parameter   
+Activates **[positive]** callback considering mouse parameter   
 Activates **[negative]** callback if **[positive]** was activated and mouse left the **[obj]**  
 - Callback functions always gets **EventObject** as argument
 - Sensitivity is in *pixel/second*
