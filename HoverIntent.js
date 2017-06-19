@@ -97,13 +97,13 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 		return elem;
 	};
 
-	this.deactivateListeners = function () {
+	this.deactivate = function () {
 		elem.removeEventListener('mouseover', onMouseOver);
 		elem.removeEventListener('mouseout', onMouseOut);
 		return elem;
 	};
 
-	this.activateListeners = function () {
+	this.activate = function () {
 		elem.addEventListener('mouseover', onMouseOver);
 		elem.addEventListener('mouseout', onMouseOut);
 		return elem;
