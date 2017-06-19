@@ -36,7 +36,7 @@ Add current listeners on target (if they were removed)
 
 ### .changeTarget(newTarget)
 Remove listeners from current target and add to the new one   
-### newTarget
+#### newTarget
     HTML Object
 ## Local Variables
 ### .sensitivity
