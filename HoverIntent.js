@@ -88,11 +88,11 @@ function HoverIntent (obj, funcPos, funcNeg, sens) {
 	this.changeTarget = function (target) {
 		if (arguments.length<1) throw new Error("Missing argument");
 
-		var targetClass = target.toString().slice(8, 12);
-		if (targetClass != "HTML") throw new Error("Argument must be an HTML Object");
+		var targetChecked = isTypeOf (arguments[0], "HTML");
+		if (!targetChecked) throw new Error("Argument must be an HTML Object");
 
 		context.deactivateListeners();
-		elem = target;
+		elem = targetChecked;
 		context.activateListeners();
 
 		return elem;
