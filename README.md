@@ -40,7 +40,7 @@ Remove listeners from current target and add to the new one
     HTML Object
 ## Local Variables
 ### .sensitivity
-Tracing speed in *pixel/second*
+Tracking speed in *pixel/second*
 
 ### .positive
 Callback function
