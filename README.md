@@ -2,8 +2,10 @@
 ```javascript
 HoverIntent (obj, positive [, negative, sensitivity])
 ```
+[Preview](https://greezlu.github.io/HoverIntent/preview/)
 Activates **[positive]** callback considering mouse parameter   
 Activates **[negative]** callback if **[positive]** was activated and mouse left the **[obj]**  
+Preview can seen here: 
 - Callback functions always gets **EventObject** as argument
 - Sensitivity is in *pixel/second*
 - Default sensitivity is *500*
