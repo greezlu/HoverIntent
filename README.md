@@ -2,7 +2,7 @@
 ```javascript
 HoverIntent (obj, positive [, negative, sensitivity])
 ```
-[Preview](https://greezlu.github.io/HoverIntent/preview/)
+[Preview](https://greezlu.github.io/HoverIntent/preview/)    
 Activates **[positive]** callback considering mouse parameter   
 Activates **[negative]** callback if **[positive]** was activated and mouse left the **[obj]**  
 Preview can seen here: 
